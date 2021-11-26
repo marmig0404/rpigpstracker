@@ -1,4 +1,5 @@
 *.db
 *.csv
-web/plot
+*.html
 .vscode
+save
