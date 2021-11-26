@@ -15,7 +15,7 @@ This package contains two services, one for recording the GPS data, another for 
 
 ### Install dependencies
 
-    sudo apt-get install python3-numpy python3-pandas;
+    sudo apt-get install sqlite3 python3-numpy python3-pandas;
     sudo pip3 install plotly
 
 ### Setup systemd services
