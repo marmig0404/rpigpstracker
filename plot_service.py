@@ -9,7 +9,7 @@ def generate_new_plot(plot_name):
     con = sqlite3.connect('locations.db')
     cur = con.cursor()
 
-    execution_string = "SELECT * FROM dev"
+    execution_string = "SELECT * FROM prod"
     print("Generating new plot from query: \n" + execution_string)
     epochs = []
     datetimes = []
