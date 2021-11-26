@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-from os import read
-import time
 import datetime
-import serial
 import re
 import sqlite3
+import time
+from os import read
+import serial
 
 con = sqlite3.connect('locations.db')
 cur = con.cursor()

@@ -3,3 +3,4 @@
 *.html
 .vscode
 save
+__pycache__
