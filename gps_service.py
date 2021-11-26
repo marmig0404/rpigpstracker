@@ -61,11 +61,16 @@ def write_to_db(serial_payload):
         long = '{:.8f}'.format(
             float(split_payload[4])/100) + split_payload[5]
         epoch = '{:.0f}'.format(time.time())
-        execution_string = "INSERT INTO dev VALUES ({0},datetime('now'),\"{1}\",\"{2}\")".format(
+        execution_string = "INSERT INTO prod VALUES ({0},datetime('now'),\"{1}\",\"{2}\")".format(
             epoch, lat, long)
         #print("DB Execute: " + execution_string)
-        cur.execute(execution_string)
-        con.commit()
+        try:
+            cur.execute(execution_string)
+            con.commit()
+        except sqlite3.OperationalError:
+            cur.execute("CREATE TABLE prod(epoch numeric, datetime date, latitude text, longitude text)")
+            cur.execute(execution_string)
+            con.commit()
 
 
 def run():
