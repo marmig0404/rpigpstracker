@@ -1,0 +1,13 @@
+[Unit]
+Description=GPS Web Viewer Service through Python
+After=multi-user.target
+
+[Service]
+Type=simple
+User=root
+Restart=always
+WorkingDirectory=/home/pi/gpstracker
+ExecStart=/usr/bin/python3 /home/pi/gpstracker/web_service.py
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=GPS Tracking Service through Python
+After=multi-user.target
+
+[Service]
+Type=simple
+User=root
+Restart=always
+WorkingDirectory=/home/pi/gpstracker/serial/gps
+ExecStart=/usr/bin/python3 /home/pi/gpstracker/serial/gps/gps_db_save.py
+
+[Install]
+WantedBy=multi-user.target
