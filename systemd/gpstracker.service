@@ -6,8 +6,8 @@ After=multi-user.target
 Type=simple
 User=root
 Restart=always
-WorkingDirectory=/home/pi/gpstracker/serial/gps
-ExecStart=/usr/bin/python3 /home/pi/gpstracker/serial/gps/gps_db_save.py
+WorkingDirectory=/home/pi/gpstracker
+ExecStart=/usr/bin/python3 /home/pi/gpstracker/gps_db_save.py
 
 [Install]
 WantedBy=multi-user.target
