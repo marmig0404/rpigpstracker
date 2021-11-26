@@ -20,7 +20,7 @@ This package contains two services, one for recording the GPS data, another for 
 
 ### Setup systemd services
 
-    sudo cp systemd/ /etc/systemd/system; # move service files
+    sudo cp systemd/* /etc/systemd/system; # move service files
     sudo systemctl daemon-reload;
     # enable services for auto-start
     sudo systemctl enable gpstracker.service;
