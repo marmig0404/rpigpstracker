@@ -1,2 +1,4 @@
 *.db
 *.csv
+web/plot
+.vscode

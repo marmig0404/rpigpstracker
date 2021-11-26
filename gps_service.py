@@ -6,7 +6,7 @@ import serial
 import re
 import sqlite3
 
-con = sqlite3.connect('save/db/locations.db')
+con = sqlite3.connect('locations.db')
 cur = con.cursor()
 
 
@@ -70,7 +70,7 @@ def write_to_db(serial_payload):
 
 
 def run():
-    localtime = time.localtime(time.time())
+    # localtime = time.localtime(time.time())
     # save_name = "GPS-Save-" + \
     #     time.strftime("%d%m%y-%H%M%S", localtime) + ".csv"
     # print('Writing to ' + save_name)
