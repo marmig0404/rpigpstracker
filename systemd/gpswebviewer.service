@@ -6,8 +6,8 @@ After=multi-user.target
 Type=simple
 User=root
 Restart=always
-WorkingDirectory=/home/pi/gpstracker
-ExecStart=/usr/bin/python3 /home/pi/gpstracker/web_service.py
+WorkingDirectory=/home/pi/rpigpstracker
+ExecStart=/usr/bin/python3 /home/pi/rpigpstracker/web_service.py
 
 [Install]
 WantedBy=multi-user.target
