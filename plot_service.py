@@ -8,7 +8,7 @@ def generate_new_plot(plot_name):
     print("Plot Serivce starting, connecting to db...")
     con = sqlite3.connect('locations.db')
     cur = con.cursor()
-    
+
     execution_string = "SELECT * FROM dev"
     print("Generating new plot from query: \n" + execution_string)
     epochs = []
