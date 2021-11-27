@@ -84,9 +84,10 @@ def run():
         while 1:
             try:
                 serial_payload = ser.readline()
-                print_coords(serial_payload)
+                # print_coords(serial_payload)
                 #write_to_save(save_name, serial_payload)
                 write_to_db(serial_payload)
+                time.sleep(0.01)
             except serial.serialutil.SerialException:
                 print("Serial Exception!")
                 break

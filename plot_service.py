@@ -11,10 +11,7 @@ def generate_new_plot(plot_name):
 
     execution_string = "SELECT * FROM prod"
     print("Generating new plot from query: \n" + execution_string)
-    epochs = []
-    datetimes = []
-    lats = []
-    longs = []
+    epochs, datetimes, lats, longs = ([], ) * 4
     for epoch, datetime, lat, long in cur.execute(execution_string):
         epochs.append(epoch)
         datetimes.append(datetime)
@@ -24,8 +21,14 @@ def generate_new_plot(plot_name):
         digit_long = float(re.sub('\D', '', long))
         parsed_long = digit_long if "E" in long else -1*digit_long
         longs.append(parsed_long)
-    fig = px.scatter(x=longs, y=lats, color=epochs,
-                     hover_name=datetimes, template="ggplot2", title='GPS Data', labels={'x': '', 'y': ''})
+    fig = px.scatter(x=longs,
+                     y=lats,
+                     color=epochs,
+                     hover_name=datetimes,
+                     template="ggplot2",
+                     title='GPS Data',
+                     labels={'x': '', 'y': ''}
+                     )
     fig.update_layout(coloraxis_showscale=False)
     fig.update_yaxes(
         scaleanchor="x",
