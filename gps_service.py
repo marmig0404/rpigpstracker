@@ -61,7 +61,7 @@ def write_to_db(serial_payload):
         long = '{:.8f}'.format(
             float(split_payload[4])/100) + split_payload[5]
         epoch = '{:.0f}'.format(time.time())
-        execution_string = "INSERT INTO prod VALUES ({0},datetime('now'),\"{1}\",\"{2}\")".format(
+        execution_string = "INSERT INTO prod VALUES ({0},datetime('now','localtime'),\"{1}\",\"{2}\")".format(
             epoch, lat, long)
         #print("DB Execute: " + execution_string)
         try:
