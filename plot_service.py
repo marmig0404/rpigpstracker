@@ -16,7 +16,7 @@ def generate_new_plot(plot_name):
         epochs.append(epoch)
         datetimes.append(datetime)
         digit_lat = float(re.sub('\D', '', lat))
-        parsed_lat = float(digit_lat if "N" in lat else -1*digit_lat)
+        parsed_lat = digit_lat if "N" in lat else -1*digit_lat
         lats.append(parsed_lat)
         digit_long = float(re.sub('\D', '', long))
         parsed_long = digit_long if "E" in long else -1*digit_long
@@ -29,7 +29,9 @@ def generate_new_plot(plot_name):
                      title='GPS Data',
                      labels={'x': '', 'y': ''}
                      )
-    fig.update_layout(coloraxis_showscale=False)
+    fig.update_layout(showlegend=False,
+                      coloraxis_showscale=False
+                      )
     fig.update_yaxes(
         scaleanchor="x",
         scaleratio=1,
