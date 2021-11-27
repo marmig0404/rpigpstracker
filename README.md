@@ -23,11 +23,8 @@ This package contains two services, one for recording the GPS data, another for 
     sudo cp systemd/* /etc/systemd/system; # move service files
     sudo systemctl daemon-reload;
     # enable services for auto-start
-    sudo systemctl enable gpstracker.service;
-    sudo systemctl enable gpswebviewer.service;
+    sudo systemctl enable gpstracker.service gpswebviewer.service;
     # start services now
-    sudo systemctl start gpstracker.service;
-    sudo systemctl start gpswebviewer.service;
+    sudo systemctl start gpstracker.service gpswebviewer.service;
     # check service status
-    sudo systemctl status gpstracker.service;
-    sudo systemctl status gpswebviewer.service;
+    sudo systemctl status gpstracker.service gpswebviewer.service;
