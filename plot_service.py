@@ -9,20 +9,20 @@ def generate_new_plot(plot_name):
     con = sqlite3.connect('locations.db')
     cur = con.cursor()
 
-    execution_string = "SELECT * FROM prod"
+    execution_string = "SELECT * FROM prod ORDER BY epoch desc"
     print("Generating new plot from query: \n" + execution_string)
-    epochs, datetimes, lats, longs = ([], ) * 4
-    for epoch, datetime, lat, long in cur.execute(execution_string):
+    epochs, datetimes, latitudes, longitudes = ([], ) * 4
+    for epoch, datetime, latitude, longitude in cur.execute(execution_string):
         epochs.append(epoch)
         datetimes.append(datetime)
-        digit_lat = float(re.sub('\D', '', lat))
-        parsed_lat = digit_lat if "N" in lat else -1*digit_lat
-        lats.append(parsed_lat)
-        digit_long = float(re.sub('\D', '', long))
-        parsed_long = digit_long if "E" in long else -1*digit_long
-        longs.append(parsed_long)
-    fig = px.scatter(x=longs,
-                     y=lats,
+        digit_latitude = float(re.sub('\D', '', latitude))
+        parsed_latitude = digit_latitude if "N" in latitude else -1*digit_latitude
+        latitudes.append(parsed_latitude)
+        digit_longitude = float(re.sub('\D', '', longitude))
+        parsed_longitude = digit_longitude if "E" in longitude else -1*digit_longitude
+        longitudes.append(parsed_longitude)
+    fig = px.scatter(x=longitudes,
+                     y=latitudes,
                      color=epochs,
                      hover_name=datetimes,
                      template="ggplot2",
