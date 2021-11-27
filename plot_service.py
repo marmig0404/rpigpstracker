@@ -25,7 +25,7 @@ def generate_new_plot(plot_name):
         parsed_long = digit_long if "E" in long else -1*digit_long
         longs.append(parsed_long)
     fig = px.scatter(x=longs, y=lats, color=epochs,
-                     hover_name=datetimes, template="seaborn", title='GPS Data', labels={'x': '', 'y': ''})
+                     hover_name=datetimes, template="ggplot2", title='GPS Data', labels={'x': '', 'y': ''})
     fig.update_layout(coloraxis_showscale=False)
     fig.update_yaxes(
         scaleanchor="x",

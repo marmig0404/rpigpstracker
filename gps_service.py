@@ -68,7 +68,8 @@ def write_to_db(serial_payload):
             cur.execute(execution_string)
             con.commit()
         except sqlite3.OperationalError:
-            cur.execute("CREATE TABLE prod(epoch numeric, datetime date, latitude text, longitude text)")
+            cur.execute(
+                "CREATE TABLE prod(epoch numeric, datetime date, latitude text, longitude text)")
             cur.execute(execution_string)
             con.commit()
 
