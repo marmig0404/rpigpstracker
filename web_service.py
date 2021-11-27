@@ -12,6 +12,10 @@ def index():
     generate_new_plot("templates/" + PLOT_NAME)
     return render_template(PLOT_NAME + ".html")
 
+@app.route('/night')
+def night():
+    generate_new_plot("templates/" + PLOT_NAME, dark_mode=True)
+    return render_template(PLOT_NAME + ".html")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)

@@ -4,7 +4,7 @@ import sqlite3
 import plotly.express as px
 
 
-def generate_new_plot(plot_name):
+def generate_new_plot(plot_name, dark_mode=False):
     print("Plot Serivce starting, connecting to db...")
     con = sqlite3.connect('locations.db')
     cur = con.cursor()
@@ -25,7 +25,7 @@ def generate_new_plot(plot_name):
                      y=latitudes,
                      color=epochs,
                      hover_name=datetimes,
-                     template="ggplot2",
+                     template="plotly_dark" if dark_mode else "ggplot2",
                      title='GPS Data',
                      labels={'x': '', 'y': ''}
                      )
