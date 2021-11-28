@@ -7,7 +7,7 @@ import plotly.express as px
 
 def generate_new_plot(plot_name, dark_mode=False):
     try:
-        execution_string = "SELECT * FROM testing"
+        execution_string = "SELECT * FROM prod"
         print("Generating new plot from query: \n\t" + execution_string)
         con = sqlite3.connect('locations.db')
         df = pd.read_sql_query(execution_string, con)
