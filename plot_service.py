@@ -1,38 +1,39 @@
 import re
 import sqlite3
 
+import pandas as pd
 import plotly.express as px
 
 
 def generate_new_plot(plot_name, dark_mode=False):
     try:
-        print("Plot Serivce starting, connecting to db...")
-        con = sqlite3.connect('locations.db')
-        cur = con.cursor()
-
-        execution_string = "SELECT * FROM prod ORDER BY epoch desc"
+        execution_string = "SELECT * FROM testing"
         print("Generating new plot from query: \n\t" + execution_string)
-        epochs, datetimes, latitudes, longitudes = ([], ) * 4
-        for epoch, datetime, latitude, longitude in cur.execute(execution_string):
-            epochs.append(epoch)
-            datetimes.append(datetime)
-            digit_latitude = float(re.sub('\D', '', latitude))
-            parsed_latitude = digit_latitude if "N" in latitude else -1*digit_latitude
-            latitudes.append(parsed_latitude)
-            digit_longitude = float(re.sub('\D', '', longitude))
-            parsed_longitude = digit_longitude if "E" in longitude else -1*digit_longitude
-            longitudes.append(parsed_longitude)
-        fig = px.scatter(x=longitudes,
-                        y=latitudes,
-                        color=epochs,
-                        hover_name=datetimes,
-                        template="plotly_dark" if dark_mode else "ggplot2",
-                        title='GPS Data',
-                        labels={'x': '', 'y': ''}
-                        )
-        fig.update_layout(showlegend=False,
-                        coloraxis_showscale=False
-                        )
+        con = sqlite3.connect('locations.db')
+        df = pd.read_sql_query(execution_string, con)
+
+        def convert_coord_to_number(input):
+            only_num = float(re.sub('N|E|S|W', '', input))
+            return only_num if "N" in input or "E" in input else -1*only_num
+
+        df['longitude'] = df['longitude'].apply(convert_coord_to_number)
+        df['latitude'] = df['latitude'].apply(convert_coord_to_number)
+
+        fig = px.scatter(
+            data_frame=df,
+            x="longitude",
+            y="latitude",
+            color="epoch",
+            hover_name="datetime",
+            template=(
+                "plotly_dark" if dark_mode else "ggplot2"
+            ),
+            title='GPS Data'
+        )
+        fig.update_layout(
+            showlegend=False,
+            coloraxis_showscale=False
+        )
         fig.update_yaxes(
             scaleanchor="x",
             scaleratio=1,
