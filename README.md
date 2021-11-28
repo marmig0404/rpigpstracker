@@ -28,3 +28,13 @@ This package contains two services, one for recording the GPS data, another for 
     sudo systemctl start gpstracker.service gpswebviewer.service;
     # check service status
     sudo systemctl status gpstracker.service gpswebviewer.service;
+
+## Update
+
+### Pull from GitHub
+
+    git pull
+    
+### Update services
+
+    sudo systemctl restart gpswebviewer gpstracker
