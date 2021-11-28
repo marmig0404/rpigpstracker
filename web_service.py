@@ -20,12 +20,20 @@ def night():
     return render_template(PLOT_NAME + "_night.html")
 
 
-def plot_generation():
+@app.route('/render')
+def render():
+    plot_generation(do_once=True)
+    return index()
+
+
+def plot_generation(do_once=False):
     while True:
         print('Starting plot generation')
         generate_new_plot("templates/" + PLOT_NAME)
         generate_new_plot("templates/" + PLOT_NAME + "_night", dark_mode=True)
         print('Plot generation sleeping...')
+        if do_once:
+            break
         time.sleep(120)
 
 
