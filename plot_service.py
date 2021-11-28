@@ -10,7 +10,7 @@ def generate_new_plot(plot_name, dark_mode=False):
     cur = con.cursor()
 
     execution_string = "SELECT * FROM prod ORDER BY epoch desc"
-    print("Generating new plot from query: \n" + execution_string)
+    print("Generating new plot from query: \n\t" + execution_string)
     epochs, datetimes, latitudes, longitudes = ([], ) * 4
     for epoch, datetime, latitude, longitude in cur.execute(execution_string):
         epochs.append(epoch)
