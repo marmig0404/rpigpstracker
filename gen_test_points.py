@@ -14,7 +14,7 @@ def gen_circle(total, current):
 con = sqlite3.connect('locations.db')
 cur = con.cursor()
 
-num_rows = 20000
+num_rows = 2000
 
 #cur.execute("CREATE TABLE testing(epoch numeric, datetime date, latitude text, longitude text)")
 for cur_row in range(num_rows):
