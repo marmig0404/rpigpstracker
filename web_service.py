@@ -26,7 +26,7 @@ def plot_generation():
         generate_new_plot("templates/" + PLOT_NAME)
         generate_new_plot("templates/" + PLOT_NAME + "_night", dark_mode=True)
         print('Plot generation sleeping...')
-        time.sleep(30)
+        time.sleep(120)
 
 
 if __name__ == '__main__':
