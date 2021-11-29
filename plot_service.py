@@ -17,10 +17,11 @@ def generate_new_plot(plot_name, dark_mode=False):
                 only_num = float(re.sub('N|E|S|W', '', input))
                 return only_num if "N" in input or "E" in input else -1*only_num
             except ValueError:
-                return 0
+                return None
 
         df['longitude'] = df['longitude'].apply(convert_coord_to_number)
         df['latitude'] = df['latitude'].apply(convert_coord_to_number)
+        df.dropna(inplace=True)
 
         fig = px.scatter(
             data_frame=df,
