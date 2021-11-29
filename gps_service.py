@@ -1,8 +1,8 @@
-import re
 import sqlite3
 import time
 
 import serial
+import pynmea2
 
 con = sqlite3.connect('locations.db')
 cur = con.cursor()
@@ -26,12 +26,12 @@ def get_serial():
 
 def write_to_db(serial_payload):
     if "$GPGGA" in serial_payload:
-        split_payload = re.split(',', serial_payload)
-        lat = '{:.8f}'.format(
-            float(split_payload[2])/100) + split_payload[3]
-        long = '{:.8f}'.format(
-            float(split_payload[4])/100) + split_payload[5]
+        parsed_payload = pynmea2.parse(serial_payload)
+
+        lat = parsed_payload.latitude
+        long = parsed_payload.longitude
         epoch = '{:.0f}'.format(time.time())
+
         execution_string = "INSERT INTO prod VALUES ({0},datetime('now','localtime'),\"{1}\",\"{2}\")".format(
             epoch, lat, long)
         try:

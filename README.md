@@ -16,7 +16,8 @@ This package contains two services, one for recording the GPS data, another for 
 ### Install dependencies
 
     sudo apt-get install sqlite3 python3-numpy python3-pandas;
-    sudo pip3 install plotly
+    sudo pip3 install plotly;
+    sudo pip install pynmea2
 
 ### Setup systemd services
 
@@ -27,14 +28,14 @@ This package contains two services, one for recording the GPS data, another for 
     # start services now
     sudo systemctl start gpstracker.service gpswebviewer.service;
     # check service status
-    sudo systemctl status gpstracker.service gpswebviewer.service;
+    sudo systemctl status gpstracker.service gpswebviewer.service
 
 ## Update
 
 ### Pull from GitHub
 
     git pull
-    
+  
 ### Update services
 
     sudo systemctl restart gpswebviewer gpstracker

@@ -3,20 +3,23 @@ import math
 
 
 def gen_circle(total, current):
-    x = math.cos(2*math.pi * (current/total))
-    y = math.sin(2*math.pi * (current/total))
-    long = ('{:.8f}'.format(x) +
-            'E') if x >= 0 else ('{:.8f}'.format(-1*x) + 'W')
-    lat = ('{:.8f}'.format(y) + 'N') if y >= 0 else ('{:.8f}'.format(-1*y) + 'S')
+    long = '{:.8f}'.format(40*math.cos(2*math.pi * (current/total)))
+    lat = '{:.8f}'.format(40*math.sin(2*math.pi * (current/total)))
     return (long, lat)
 
 
 con = sqlite3.connect('locations.db')
 cur = con.cursor()
 
-num_rows = 2000
+num_rows = 20
 
-#cur.execute("CREATE TABLE testing(epoch numeric, datetime date, latitude text, longitude text)")
+
+try:
+    cur.execute("DELETE FROM testing WHERE true")
+except sqlite3.OperationalError:
+    cur.execute(
+        "CREATE TABLE testing(epoch numeric, datetime date, latitude text, longitude text)")
+
 for cur_row in range(num_rows):
     epoch = cur_row
     (long, lat) = gen_circle(num_rows, cur_row)

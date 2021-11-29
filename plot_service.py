@@ -5,23 +5,12 @@ import pandas as pd
 import plotly.express as px
 
 
-def generate_new_plot(plot_name, dark_mode=False):
+def generate_new_point_plot(plot_name, dark_mode=False):
     try:
         execution_string = "SELECT * FROM prod"
         print("Generating new plot from query: \n\t" + execution_string)
         con = sqlite3.connect('locations.db')
         df = pd.read_sql_query(execution_string, con)
-
-        def convert_coord_to_number(input):
-            try:
-                only_num = float(re.sub('N|E|S|W', '', input))
-                return only_num if "N" in input or "E" in input else -1*only_num
-            except ValueError:
-                return None
-
-        df['longitude'] = df['longitude'].apply(convert_coord_to_number)
-        df['latitude'] = df['latitude'].apply(convert_coord_to_number)
-        df.dropna(inplace=True)
 
         fig = px.scatter(
             data_frame=df,
@@ -35,6 +24,7 @@ def generate_new_plot(plot_name, dark_mode=False):
             title='GPS Data'
         )
         fig.update_layout(
+            autotypenumbers='convert types',
             showlegend=False,
             coloraxis_showscale=False
         )
@@ -46,3 +36,30 @@ def generate_new_plot(plot_name, dark_mode=False):
         print("Wrote plot to {0}.html".format(plot_name))
     except ValueError:
         print("No values in db to plot.")
+
+
+def generate_new_geo_plot(plot_name):
+    try:
+        px.set_mapbox_access_token(open(".mapbox_token").read())
+    except FileNotFoundError:
+        print("Create '.mapbox_token' and populate to use geo plotting.")
+
+    execution_string = "SELECT * FROM prod"
+    print("Generating new geo plot from query: \n\t" + execution_string)
+    con = sqlite3.connect('locations.db')
+    df = pd.read_sql_query(execution_string, con)
+
+    df['latitude'] = pd.to_numeric(df['latitude'])
+    df['longitude'] = pd.to_numeric(df['longitude'])
+
+    fig = px.line_mapbox(
+        df,
+        lat='latitude',
+        lon='longitude',
+        hover_name='datetime',
+    )
+    fig.update_layout(
+        coloraxis_showscale=False,
+    )
+    fig.write_html(plot_name+".html")
+    print("Wrote plot to {0}.html".format(plot_name))

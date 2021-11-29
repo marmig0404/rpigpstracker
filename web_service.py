@@ -3,7 +3,7 @@ from multiprocessing import Process
 
 from flask import Flask, render_template
 
-from plot_service import generate_new_plot
+from plot_service import generate_new_geo_plot, generate_new_point_plot
 
 PLOT_NAME = "plot"
 
@@ -12,7 +12,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template(PLOT_NAME + ".html")
+    return render_template(PLOT_NAME + "_geo.html")
+
+
+@app.route('/point')
+def point():
+    return render_template(PLOT_NAME + "_point.html")
 
 
 @app.route('/night')
@@ -25,16 +30,14 @@ def render():
     plot_generation(do_once=True)
     return index()
 
-@app.route('/night/render')
-def Night_render():
-    plot_generation(do_once=True)
-    return night()
 
 def plot_generation(do_once=False):
     while True:
         print('Starting plot generation')
-        generate_new_plot("templates/" + PLOT_NAME)
-        generate_new_plot("templates/" + PLOT_NAME + "_night", dark_mode=True)
+        generate_new_point_plot("templates/" + PLOT_NAME + "_point")
+        generate_new_point_plot(
+            "templates/" + PLOT_NAME + "_night", dark_mode=True)
+        generate_new_geo_plot("templates/" + PLOT_NAME + "_geo")
         print('Plot generation sleeping...')
         if do_once:
             break
