@@ -11,11 +11,13 @@ def generate_new_plot(plot_name, dark_mode=False):
         print("Generating new plot from query: \n\t" + execution_string)
         con = sqlite3.connect('locations.db')
         df = pd.read_sql_query(execution_string, con)
-        df.drop(df[bool(re.search('E|W', df['longitude'])) or bool(
-            re.search('N|S', df['latitude']))].index, inplace=True)
+
         def convert_coord_to_number(input):
-            only_num = float(re.sub('N|E|S|W', '', input))
-            return only_num if "N" in input or "E" in input else -1*only_num
+            try:
+                only_num = float(re.sub('N|E|S|W', '', input))
+                return only_num if "N" in input or "E" in input else -1*only_num
+            except ValueError:
+                return 0
 
         df['longitude'] = df['longitude'].apply(convert_coord_to_number)
         df['latitude'] = df['latitude'].apply(convert_coord_to_number)
