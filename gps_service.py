@@ -36,12 +36,11 @@ def write_to_db(serial_payload):
             epoch, lat, long)
         try:
             cur.execute(execution_string)
-            con.commit()
         except sqlite3.OperationalError:
             cur.execute(
                 "CREATE TABLE prod(epoch numeric, datetime date, latitude text, longitude text)")
             cur.execute(execution_string)
-            con.commit()
+        con.commit()
 
 
 def run():

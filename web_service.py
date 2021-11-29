@@ -25,6 +25,10 @@ def render():
     plot_generation(do_once=True)
     return index()
 
+@app.route('/night/render')
+def render():
+    plot_generation(do_once=True)
+    return night()
 
 def plot_generation(do_once=False):
     while True:
