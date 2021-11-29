@@ -32,7 +32,7 @@ def generate_new_point_plot(plot_name, dark_mode=False):
             scaleanchor="x",
             scaleratio=1,
         )
-        fig.write_html(plot_name+".html")
+        fig.write_html(plot_name+".html", include_plotlyjs='cdn', include_mathjax='cdn')
         print("Wrote plot to {0}.html".format(plot_name))
     except ValueError:
         print("No values in db to plot.")
@@ -61,5 +61,5 @@ def generate_new_geo_plot(plot_name):
     fig.update_layout(
         coloraxis_showscale=False,
     )
-    fig.write_html(plot_name+".html")
+    fig.write_html(plot_name+".html", include_plotlyjs='cdn', include_mathjax='cdn')
     print("Wrote plot to {0}.html".format(plot_name))
