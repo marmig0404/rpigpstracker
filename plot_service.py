@@ -52,6 +52,9 @@ def generate_new_geo_plot(plot_name):
     df['latitude'] = pd.to_numeric(df['latitude'])
     df['longitude'] = pd.to_numeric(df['longitude'])
 
+    df = df[[df['latitude'] != 0]]
+    df = df[[df['longitude'] != 0]]
+
     fig = px.line_mapbox(
         df,
         lat='latitude',
