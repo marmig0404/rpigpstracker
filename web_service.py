@@ -41,7 +41,7 @@ def plot_generation(do_once=False):
         print('Plot generation sleeping...')
         if do_once:
             break
-        time.sleep(120)
+        time.sleep(60*5)
 
 
 if __name__ == '__main__':

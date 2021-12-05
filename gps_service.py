@@ -41,16 +41,26 @@ def write_to_db(serial_payload):
                 "CREATE TABLE prod(epoch numeric, datetime date, latitude text, longitude text)")
             cur.execute(execution_string)
         con.commit()
+        return True
+    return False
 
 
 def run():
+    gps_retry = 0
     while 1:
         ser = get_serial()
         while 1:
             try:
                 serial_payload = ser.readline()
-                write_to_db(serial_payload)
-                time.sleep(0.1)
+                if not write_to_db(serial_payload):
+                    gps_retry += 1
+                    if gps_retry > 100:
+                        time.sleep(30)
+                        gps_retry = 0
+                        print("No new coordinates, sleeping for 30s...")
+                else:
+                    gps_retry = 0
+                time.sleep(0.2)
             except serial.serialutil.SerialException:
                 print("Serial Exception!")
                 break
